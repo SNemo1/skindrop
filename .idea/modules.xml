@@ -2,7 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+<<<<<<< HEAD
       <module fileurl="file://$PROJECT_DIR$/.idea/skindrop.iml" filepath="$PROJECT_DIR$/.idea/skindrop.iml" />
+=======
+      <module fileurl="file://$PROJECT_DIR$/.idea/dropShip.iml" filepath="$PROJECT_DIR$/.idea/dropShip.iml" />
+>>>>>>> 71a16877b782f0ebeb4a68561d3cdc390f4a59b8
     </modules>
   </component>
 </project>
