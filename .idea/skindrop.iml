@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<<<<<<< HEAD
+<module type="PYTHON_MODULE" version="4">
+  <component name="NewModuleRootManager">
+    <content url="file://$MODULE_DIR$" />
+    <orderEntry type="jdk" jdkName="Python 3.14" jdkType="Python SDK" />
+=======
 <module type="WEB_MODULE" version="4">
   <component name="NewModuleRootManager">
     <content url="file://$MODULE_DIR$">
@@ -7,6 +13,7 @@
       <excludeFolder url="file://$MODULE_DIR$/tmp" />
     </content>
     <orderEntry type="inheritedJdk" />
+>>>>>>> 53c7ee4ddf0f5d909f902fc49f26ea7d98f29535
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
 </module>
