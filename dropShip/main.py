@@ -1,16 +1,16 @@
 import random
 from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
-
 from sqlalchemy import create_engine, Column, Integer, String
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
+
 SQLALCHEMY_DATABASE_URL = "sqlite:///./users.db"
 engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 Base = declarative_base()
 
 class User(Base):
-    __tablename__ = "users"  # Так таблиця буде називатися в базі
+    __tablename__ = "users"
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String, unique=True, index=True)
     balance = Column(Integer, default=1000)
@@ -22,7 +22,6 @@ def get_db():
     finally:
         db.close()
 app = FastAPI()
-
 
 app.add_middleware(
     CORSMiddleware,
@@ -50,7 +49,4 @@ def register_user(username: str, db: Session = Depends(get_db)):
     user = User(username=username)
     db.add(user)
     db.commit()
-
-    return {"message": f"Гравець {username} успішно створений! Твій баланс 1000$"}
-
-
+    return {"message": f"Гравець {username} успішно створений! Твій баланс 1000$."}
