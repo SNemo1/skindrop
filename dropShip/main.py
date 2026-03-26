@@ -1,8 +1,28 @@
 import random
-from fastapi import FastAPI
+from fastapi import FastAPI, Depends
 from fastapi.middleware.cors import CORSMiddleware
 
+from sqlalchemy import create_engine, Column, Integer, String
+from sqlalchemy.orm import sessionmaker, declarative_base, Session
+SQLALCHEMY_DATABASE_URL = "sqlite:///./users.db"
+engine = create_engine(SQLALCHEMY_DATABASE_URL, connect_args={"check_same_thread": False})
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
+
+class User(Base):
+    __tablename__ = "users"  # Так таблиця буде називатися в базі
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    balance = Column(Integer, default=1000)
+Base.metadata.create_all(bind=engine)
+def get_db():
+    db = SessionLocal()
+    try:
+        yield db
+    finally:
+        db.close()
 app = FastAPI()
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,5 +43,14 @@ skins = [
 def spin_roulette():
     chances = [5.4, 24.6, 30, 40]
     winner = random.choices(skins, k = 1, weights = chances)
-
     return {"massage": f"Оце так пощастило! Тобі випав {winner[0]['name']} {winner[0]['sum']}"}
+
+@app.post("/register/{username}")
+def register_user(username: str, db: Session = Depends(get_db)):
+    user = User(username=username)
+    db.add(user)
+    db.commit()
+
+    return {"message": f"Гравець {username} успішно створений! Твій баланс 1000$"}
+
+
